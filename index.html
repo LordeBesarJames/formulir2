@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir</title>
+    <style>
+        body {
+            margin: 50px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Hubungi Kami</h2>
+
+    <form id="formKontak" onsubmit="return validasiForm()">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama">
+        <div id="errorNama" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <div id="errorEmail" class="error"></div>
+
+        <label for="telepon">Nomor Telepon:</label>
+        <input type="text" id="telepon" name="telepon">
+        <div id="errorTelepon" class="error"></div>
+
+        <label for="pesan">Pesan:</label>
+        <textarea id="pesan" name="pesan" rows="4"></textarea>
+        <div id="errorPesan" class="error"></div>
+
+        <input type="submit" value="Kirim">
+    </form>
+
+    <script>
+        function validasiForm() {
+            let valid = true;
+
+            // Bersihkan pesan error sebelumnya
+            document.getElementById("errorNama").textContent = "";
+            document.getElementById("errorEmail").textContent = "";
+            document.getElementById("errorTelepon").textContent = "";
+            document.getElementById("errorPesan").textContent = "";
+
+            // Ambil nilai dari input
+            const nama = document.getElementById("nama").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const telepon = document.getElementById("telepon").value.trim();
+            const pesan = document.getElementById("pesan").value.trim();
+
+            // Validasi Nama
+            if (nama === "") {
+                document.getElementById("errorNama").textContent = "Nama harus diisi.";
+                valid = false;
+            }
+
+            // Validasi Email (regex sederhana untuk format email)
+            const polaEmail = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+            if (email === "") {
+                document.getElementById("errorEmail").textContent = "Email harus diisi.";
+                valid = false;
+            } else if (!polaEmail.test(email)) {
+                document.getElementById("errorEmail").textContent = "Masukkan alamat email yang valid.";
+                valid = false;
+            }
+
+            // Validasi Nomor Telepon (hanya angka)
+            const polaTelepon = /^[0-9]{10,15}$/;
+            if (telepon === "") {
+                document.getElementById("errorTelepon").textContent = "Nomor telepon harus diisi.";
+                valid = false;
+            } else if (!polaTelepon.test(telepon)) {
+                document.getElementById("errorTelepon").textContent = "Masukkan nomor telepon yang valid.";
+                valid = false;
+            }
+
+            // Validasi Pesan
+            if (pesan === "") {
+                document.getElementById("errorPesan").textContent = "Pesan harus diisi.";
+                valid = false;
+            }
+
+            return valid;
+        }
+    </script>
+
+</body>
+</html>
